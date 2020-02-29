@@ -1,35 +1,13 @@
- .root {
-    width: 600px;
-    height: 600px;
-    background-color: #ded6ae;
-    text-align: center;
-    font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
-} 
-
-/* body {
-    background-color: #ded6ae;
-    font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
-} */
-
 .center {
     text-align: center;
 }
 
-.wall {
-    background-image: url('./images/bricks2.png');
-    width: 75px;
-    height: 75px;
-}
-
-.empty {
-    width: 75px;
-    height: 75px;
-}
-
 .fieldWrapper {
+    margin: 50px 0;
     display: inline-block;
     position: relative;
     width: 600px;
+    background-color: #ded6ae;    
 }
 
 .field {
@@ -41,8 +19,6 @@
     border: none;
     padding: 0;
     background-size: cover;
-    /* width: 75px;
-    height: 75px; */
 }
 
 .field td:before {
@@ -50,8 +26,6 @@
     box-sizing: border-box;
     display: block;
     margin-top: 100%;
-    /* width: 75px;
-    height: 75px; */
 }
 
 .movablePart {
@@ -63,16 +37,16 @@
     transition-timing-function: ease-in-out;
 }
 
+.wall {
+    background-image: url(./images/bricks2.png);
+}
+
 .box {
-    background-image: url('./images/package.svg');
-    width: auto;
-    height: auto;
-    width: 75px;
-    height: 75px;
+    background-image: url(./images/package.svg);
 }
 
 .player {
-    background-image: url('./images/unicorn.svg');
+    background-image: url(./images/unicorn.svg)
 }
 
 .target {
@@ -80,6 +54,6 @@
 }
 
 .boxOnTarget {
-    background-image: url('./images/package.svg');
+    background-image: url(./images/package.svg);
     filter: brightness(50%);
 }

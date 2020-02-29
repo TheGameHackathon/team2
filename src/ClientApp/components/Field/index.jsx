@@ -29,17 +29,17 @@ class Row extends React.Component {
 class Map extends React.Component {
     render() {
         return (
-            <table className="field">
+            <table className={styles.field}>
                 <tbody>
                     <Row cells={[styles.empty, styles.empty, styles.wall, styles.wall, styles.wall, styles.wall, styles.wall, styles.empty]} />
                     <Row cells={[styles.wall, styles.wall, styles.wall, styles.empty, styles.empty, styles.empty, styles.wall, styles.empty]} />
-                    <Row cells={[styles.wall, styles.target, styles.empty, styles.empty, styles.empty, styles.empty, styles.wall, styles.empty]}/>
-                    <Row cells={[styles.wall, styles.wall, styles.wall, styles.empty, styles.box, styles.target, styles.wall, styles.empty]}/>
-                    <Row cells={[styles.wall, styles.target, styles.wall, styles.wall, styles.box, styles.empty, styles.wall, styles.empty]}/>
-                    <Row cells={[styles.wall, styles.empty, styles.wall, styles.empty, styles.target, styles.empty, styles.wall, styles.wall]}/>
-                    <Row cells={[styles.wall, styles.empty, styles.empty, styles.empty, styles.empty, styles.empty, styles.target, styles.wall]}/>
-                    <Row cells={[styles.wall, styles.empty, styles.empty, styles.empty, styles.target, styles.empty, styles.empty, styles.wall]}/>
-                    <Row cells={[styles.wall, styles.wall, styles.wall, styles.wall, styles.wall, styles.wall, styles.wall, styles.wall]}/>
+                    <Row cells={[styles.wall, styles.target, styles.empty, styles.empty, styles.empty, styles.empty, styles.wall, styles.empty]} />
+                    <Row cells={[styles.wall, styles.wall, styles.wall, styles.empty, styles.box, styles.target, styles.wall, styles.empty]} />
+                    <Row cells={[styles.wall, styles.target, styles.wall, styles.wall, styles.box, styles.empty, styles.wall, styles.empty]} />
+                    <Row cells={[styles.wall, styles.empty, styles.wall, styles.empty, styles.target, styles.empty, styles.wall, styles.wall]} />
+                    <Row cells={[styles.wall, styles.empty, styles.empty, styles.empty, styles.empty, styles.empty, styles.target, styles.wall]} />
+                    <Row cells={[styles.wall, styles.empty, styles.empty, styles.empty, styles.target, styles.empty, styles.empty, styles.wall]} />
+                    <Row cells={[styles.wall, styles.wall, styles.wall, styles.wall, styles.wall, styles.wall, styles.wall, styles.wall]} />
                 </tbody>
             </table>);
     }
@@ -57,14 +57,4 @@ export default class Field extends React.Component {
             </div>
         );
     }
-
-    //     <div className={styles.fieldWrapper}>
-    //     <table className={styles.field}>
-    //         <tbody>
-    //             <tr>
-    //                 <td className={styles.wall}>a</td>
-    //             </tr>
-    //         </tbody>
-    //     </table>
-    // </div>
 }
