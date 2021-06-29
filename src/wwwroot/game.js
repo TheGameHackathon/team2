@@ -58,6 +58,8 @@ function renderField(game) {
 
 function updateField(game) {
     if (game) {
+        if (game.isFinished)
+        {alert("F")}
         scoreElement.innerText = `Your score: ${game.score}`;
         startMessage.innerText = `Your score: ${game.score}. Again?`;
     }
