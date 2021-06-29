@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using thegame.Models;
 
 namespace thegame.Services.FieldFactory
 {
-    interface IFieldFactory
+    public interface IFieldFactory
     {
+        public GameDto GetGameDto(Complexity complexity, string[] color);
     }
 }
