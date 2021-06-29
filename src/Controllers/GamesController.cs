@@ -8,11 +8,17 @@ namespace thegame.Controllers
     [Route("api/games")]
     public class GamesController : Controller
     {
+        private IFieldFactory fieldFactory;
+
+        public GamesController(IFieldFactory fieldFactory)
+        {
+
+        }
         [HttpPost]
         public IActionResult Index()
         {
-            var factory = new FieldFactory().GetGameDto(Complexity.Easy, new []{"color1", "color2", "color3"});
-            return Ok(factory);
+            var newGame = fieldFactory.GetGameDto(Complexity.Easy, new[] {"color1", " color2", "color3"});
+            return Ok(newGame);
         }
     }
 }
