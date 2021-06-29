@@ -7,6 +7,6 @@ namespace thegame.Services
 {
     public class GamesRepo
     {
-        public readonly Dictionary<Guid, GameDto> Games = new();
+        public readonly ConcurrentDictionary<Guid, GameDto> Games = new();
     }
 }

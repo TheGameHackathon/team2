@@ -9,6 +9,7 @@ namespace thegame.Domain.Game
     {
         public GameField gameField;
         public Guid Id;
+        public Complexity Complexity;
         public bool IsFinished { get; set; }
 
         public GameBase()

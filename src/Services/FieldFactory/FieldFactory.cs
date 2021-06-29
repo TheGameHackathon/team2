@@ -27,6 +27,7 @@ namespace thegame.Services.FieldFactory
             var cells = GetCell(size, colors.Take(colorsCount).ToArray());
 
             var game = new GameDto(cells, false, true, size, size, Guid.NewGuid(), false, 0);
+            game.Complexity = complexity;
             return game;
         }
 
@@ -52,6 +53,18 @@ namespace thegame.Services.FieldFactory
             }
 
             return cells;
+        }
+
+        public GameDto GetNextLevel(Complexity complexity)
+        {
+            return complexity switch
+            {
+                Complexity.Level1 => GetGameDto(Complexity.Level2),
+                Complexity.Level2 => GetGameDto(Complexity.Level3),
+                Complexity.Level3 => GetGameDto(Complexity.Level4),
+                Complexity.Level4 => GetGameDto(Complexity.Level5),
+                _ => null,
+            };
         }
     }
 }

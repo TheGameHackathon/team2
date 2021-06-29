@@ -1,4 +1,5 @@
 using System;
+using thegame.Domain.Game;
 
 namespace thegame.Models
 {
@@ -29,5 +30,6 @@ namespace thegame.Models
         public Guid Id { get; set; }
         public bool IsFinished { get; set; }
         public int Score { get; set; }
+        public Complexity Complexity { get; set; }
     }
 }
