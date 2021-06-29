@@ -30,7 +30,7 @@ namespace thegame.Controllers
             game.MakeMove(new Vector(userInput.ClickedPos.X, userInput.ClickedPos.Y));
             gamesRepo.Games[gameId].Cells = game.gameField.Cells.SelectMany(x => x.Select(y => new
                 CellDto($"h{y.Coordinates.Y}w{y.Coordinates.X}", new VectorDto(y.Coordinates.X, y.Coordinates.Y),
-                    TypeColorToColor(y.Color), "", 0))).ToArray();
+                    y.Color.TypeColorToColor(), "", 0))).ToArray();
             gameDto.Score++;
 
             if (game.IsFinished)
@@ -39,18 +39,6 @@ namespace thegame.Controllers
             }
 
             return Ok(gameDto);
-        }
-        private string TypeColorToColor(Color color)
-        {
-            if (color == Color.Blue)
-                return "color1";
-            if (color == Color.Red)
-                return "color2";
-            if (color == Color.Green)
-                return "color3";
-            if (color == Color.Cyan)
-                return "color4";
-            return "color5";
         }
     }
 }
