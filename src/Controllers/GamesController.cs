@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using thegame.Models;
 using thegame.Services;
+using thegame.Services.FieldFactory;
 
 namespace thegame.Controllers
 {
@@ -10,7 +11,8 @@ namespace thegame.Controllers
         [HttpPost]
         public IActionResult Index()
         {
-            return Ok(TestData.AGameDto(new VectorDto(1, 1)));
+            var factory = new FieldFactory().GetGameDto(Complexity.Easy, new []{"color1", "color2", "color3"});
+            return Ok(factory);
         }
     }
 }
