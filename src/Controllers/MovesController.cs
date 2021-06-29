@@ -36,6 +36,8 @@ namespace thegame.Controllers
             if (game.IsFinished)
             {
                 gameDto.IsFinished = true;
+
+                return Ok(gameDto);
             }
 
             return Ok(gameDto);

@@ -34,11 +34,11 @@ namespace thegame.Services.FieldFactory
         private (int size, int colorsCount) GetPatameters(Complexity complexity)=>
             complexity switch
             {
-                Complexity.Level1 => (10,3),
-                Complexity.Level2 => (15,3),
-                Complexity.Level3 => (15,4),
-                Complexity.Level4 => (20,4),
-                Complexity.Level5 => (20,5),
+                Complexity.Level1 => (4,3),
+                Complexity.Level2 => (5,3),
+                Complexity.Level3 => (10,4),
+                Complexity.Level4 => (12,4),
+                Complexity.Level5 => (15,5),
                 _ => throw new ArgumentException("compexity is not avaliable"),
             };
 

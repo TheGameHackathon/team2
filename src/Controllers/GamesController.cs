@@ -1,3 +1,4 @@
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using thegame.Domain.Game;
 using thegame.Models;
@@ -20,9 +21,22 @@ namespace thegame.Controllers
         [HttpPost]
         public IActionResult Index()
         {
+            var finished = gamesRepo.Games.Where(x => x.Value.IsFinished).ToArray();
+            foreach (var a in finished)
+            {
+                var newGame1 = fieldFactory.GetNextLevel(a.Value.Complexity);
+                newGame1.Id = a.Key;
+                gamesRepo.Games[a.Key] = newGame1;
+                return Ok(newGame1);
+            }
             var newGame = fieldFactory.GetGameDto(Complexity.Level1);
             gamesRepo.Games[newGame.Id] = newGame;
             return Ok(newGame);
+        }
+
+        private void x()
+        {
+
         }
     }
 }
