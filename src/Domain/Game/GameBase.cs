@@ -14,7 +14,6 @@ namespace thegame.Domain.Game
         {
             this.gameField = gameField;
             Id = id;
-            Complexity = complexity;
         }
 
         public abstract void MakeMove(Vector move);
