@@ -71,6 +71,7 @@ function updateField(game) {
     const cells = game.cells;
     const existedCells = {};
     for (let newCell of cells) {
+        console.log(newCell.id);
         if (newCell.id in currentCells) {
             moveCell(newCell);
         } else {

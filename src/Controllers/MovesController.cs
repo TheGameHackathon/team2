@@ -28,20 +28,14 @@ namespace thegame.Controllers
             var gameDto = gamesRepo.Games[gameId];
             var game = mapper.Map<GameDto, SmartGame>(gameDto);
             game.MakeMove(new Vector(userInput.ClickedPos.X, userInput.ClickedPos.Y));
-            gamesRepo.Games[gameId].Cells = game.gameField.Cells.SelectMany(x => x.Select(y=>new 
+            gamesRepo.Games[gameId].Cells = game.gameField.Cells.SelectMany(x => x.Select(y => new
                 CellDto($"h{y.Coordinates.Y}w{y.Coordinates.X}", new VectorDto(y.Coordinates.X, y.Coordinates.Y),
-                    TypeColorToColor(y.Color),"", 0))).ToArray();
+                    TypeColorToColor(y.Color), "", 0))).ToArray();
             gameDto.Score++;
-            
+
             if (game.IsFinished)
             {
                 gameDto.IsFinished = true;
-                //return Ok(factory.GetNextLevel(gameDto.Complexity));
-                //var newGame = factory.GetNextLevel(gameDto.Complexity);
-                //gameDto.Cells = newGame.Cells;
-                //gameDto.Width = newGame.Width;
-                //gameDto.Height = newGame.Height;
-                //gameDto.
             }
 
             return Ok(gameDto);
