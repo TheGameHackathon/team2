@@ -10,6 +10,10 @@ namespace thegame.Services.FieldFactory
 {
     public class FieldFactory:IFieldFactory
     {
+        string[] colors = new []
+        {
+            "color1","color2", "color3", "color4", "color5"
+        }
         private Random rnd;
 
         public FieldFactory()
@@ -19,19 +23,21 @@ namespace thegame.Services.FieldFactory
 
         public GameDto GetGameDto(Complexity complexity, string[] colors)
         {
-            var size = GetSize(complexity);
-            var cells = GetCell(size, colors);
+            var parameters = GetPatameters(complexity);
+            var cells = GetCell(parameters.size, colors);
 
             var game = new GameDto(cells, false, true, size, size, Guid.NewGuid(), false, 0);
             return game;
         }
 
-        private int GetSize(Complexity complexity)=>
+        private (int size, int colorsCount) GetPatameters(Complexity complexity)=>
             complexity switch
             {
-                Complexity.Easy => 15,
-                Complexity.Normal => 20,
-                Complexity.Hard => 25,
+                Complexity.Level1 => (10,3),
+                Complexity.Level2 => (15,3),
+                Complexity.Level3 => (15,4),
+                Complexity.Level4 => (20,4),
+                Complexity.Level5 => (20,5),
                 _ => throw new ArgumentException("compexity is not avaliable"),
             };
 

@@ -8,7 +8,7 @@ namespace thegame.Domain.Game
     public class Cell
     {
         public readonly Vector Coordinates;
-        public readonly Color Color;
+        public Color Color;
         public Cell(Vector coordinates, Color color)
         {
             Coordinates = coordinates;

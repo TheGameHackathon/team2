@@ -7,6 +7,7 @@ namespace thegame.Domain.Game
 {
     public enum Complexity
     {
-        Easy, Normal, Hard
+        Level1, Level2, Level3, Level4, Level5
+        //Easy, Normal, Hard
     }
 }
