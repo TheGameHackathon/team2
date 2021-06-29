@@ -13,7 +13,6 @@ namespace thegame.Controllers
     [Route("api/games/{gameId}/moves")]
     public class MovesController : Controller
     {
-        private GameBase game;
         private IMapper mapper;
         private GamesRepo gamesRepo;
         private IFieldFactory factory;
@@ -33,8 +32,10 @@ namespace thegame.Controllers
                 CellDto($"h{y.Coordinates.Y}w{y.Coordinates.X}", new VectorDto(y.Coordinates.X, y.Coordinates.Y),
                     TypeColorToColor(y.Color),"", 0))).ToArray();
             gameDto.Score++;
+            
             if (game.IsFinished)
             {
+                gameDto.IsFinished = true;
                 //return Ok(factory.GetNextLevel(gameDto.Complexity));
                 //var newGame = factory.GetNextLevel(gameDto.Complexity);
                 //gameDto.Cells = newGame.Cells;
