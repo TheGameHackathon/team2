@@ -18,7 +18,7 @@ namespace thegame.Controllers
         [HttpPost]
         public IActionResult Index()
         {
-            var newGame = fieldFactory.GetGameDto(Complexity.Easy, new[] {"color1", " color2", "color3"});
+            var newGame = fieldFactory.GetGameDto(Complexity.Level2);
             return Ok(newGame);
         }
     }

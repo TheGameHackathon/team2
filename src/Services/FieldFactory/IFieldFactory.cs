@@ -9,6 +9,6 @@ namespace thegame.Services.FieldFactory
 {
     public interface IFieldFactory
     {
-        public GameDto GetGameDto(Complexity complexity, string[] color);
+        public GameDto GetGameDto(Complexity complexity);
     }
 }
