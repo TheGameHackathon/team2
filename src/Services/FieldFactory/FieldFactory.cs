@@ -48,7 +48,7 @@ namespace thegame.Services.FieldFactory
             {
                 var position = new VectorDto(i % size, i / size);
                 var color = colors[rnd.Next(0, colors.Length)];
-                cells[i] = new CellDto(i.ToString(), position, color, "", 0);
+                cells[i] = new CellDto($"h{position.Y}w{position.X}", position, color, "", 0);
             }
 
             return cells;

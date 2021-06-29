@@ -10,6 +10,11 @@ namespace thegame.Domain.Game
     public class SmartGame : GameBase
     {
         private Cell leftUpCell;
+
+        public SmartGame()
+        {
+
+        }
         public SmartGame(Guid id, GameField gameField) : base(id, gameField)
         {
             leftUpCell = gameField.Cells[0][0];
@@ -17,6 +22,7 @@ namespace thegame.Domain.Game
 
         public override void MakeMove(Vector move)
         {
+            leftUpCell = gameField.Cells[0][0];
             if (leftUpCell.Color == gameField.Cells[move.Y][move.X].Color)
                 return;
             var chosenColor = gameField.Cells[move.Y][move.X].Color;
@@ -50,11 +56,11 @@ namespace thegame.Domain.Game
             foreach (var direction in directions)
             {
                 var newPos = new Point(toopen.Coordinates.X + direction.X, (toopen.Coordinates.Y + direction.Y));
-
+                if (!(newPos.X >= 0 && newPos.Y >= 0 && newPos.X < gameField.Width && newPos.Y < gameField.Height))
+                    continue;
                 if (visited.Contains(gameField.Cells[newPos.Y][newPos.X]))
                     continue;
-                if (!(newPos.X>=0 && newPos.Y>=0 && newPos.X <gameField.Width && newPos.Y<gameField.Height))
-                    continue;
+                
                 result.Add(gameField.Cells[newPos.Y][newPos.X]);
             }
 

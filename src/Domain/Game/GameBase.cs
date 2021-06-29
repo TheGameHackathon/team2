@@ -7,9 +7,14 @@ namespace thegame.Domain.Game
 {
     public abstract class GameBase
     {
-        public readonly GameField gameField;
-        public readonly Guid Id;
-        public bool IsFinished { get; }
+        public GameField gameField;
+        public Guid Id;
+        public bool IsFinished { get; set; }
+
+        public GameBase()
+        {
+
+        }
         protected GameBase(Guid id, GameField gameField)
         {
             this.gameField = gameField;

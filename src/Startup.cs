@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,6 +9,7 @@ using AutoMapper.Configuration;
 using thegame.Domain;
 using thegame.Domain.Game;
 using thegame.Models;
+using thegame.Services;
 
 namespace thegame
 {
@@ -27,15 +29,22 @@ namespace thegame
             services.AddMvc();
             services.AddAutoMapper(cfg =>
             {
-                cfg.CreateMap<GameDto, GameBase>()
+                cfg.CreateMap<GameDto, SmartGame>()
                     .ForMember(dest => dest.gameField,
-                        opt => opt.MapFrom(x => OneDimensionCellsToTwoDimenstion(x.Cells, x.Width, x.Height)));
-                cfg.CreateMap<GameBase, GameDto>()
-                    .ForMember(dest => dest.Cells, opt => opt.MapFrom(x => x.gameField.Cells.SelectMany(a => a)))
+                        opt => opt.MapFrom(x =>
+                            new GameField(OneDimensionCellsToTwoDimenstion(x.Cells, x.Width, x.Height),
+                                x.Width, x.Height)));
+                cfg.CreateMap<SmartGame, GameDto>()
+                    .ForMember(dest => dest.Cells, opt => opt.MapFrom(
+                        x => x.gameField.Cells.SelectMany(a => a).Select(a =>
+                            new CellDto($"h{a.Coordinates.Y}w{a.Coordinates.X}",
+                                new VectorDto(a.Coordinates.X, a.Coordinates.Y), TypeColorToColor(a.Color), "", 0))))
                     .ForMember(dest => dest.Height, opt => opt.MapFrom(x => x.gameField.Height))
                     .ForMember(dest => dest.Width, opt => opt.MapFrom(x => x.gameField.Width));
             });
+            services.AddSingleton<GamesRepo, GamesRepo>();
         }
+
         private Cell[][] OneDimensionCellsToTwoDimenstion(CellDto[] cells, int width, int height)
         {
             var newCells = new Cell[height][];
@@ -44,6 +53,19 @@ namespace thegame
             foreach (var cell in cells)
                 newCells[cell.Pos.Y][cell.Pos.X] = new Cell(new Vector(cell.Pos.X, cell.Pos.Y), TypeColorToColor(cell.Type));
             return newCells;
+        }
+
+        private string TypeColorToColor(Color color)
+        {
+            if (color == Color.Blue)
+                return "color1";
+            if (color == Color.Red)
+                return "color2";
+            if (color == Color.Green)
+                return "color3";
+            if (color == Color.Cyan)
+                return "color4";
+            return "color5";
         }
 
         private Color TypeColorToColor(string type)

@@ -14,17 +14,21 @@ namespace thegame.Controllers
     {
         private GameBase game;
         private IMapper mapper;
-        public MovesController(GameBase game, IMapper mapper)
+        private GamesRepo gamesRepo;
+        public MovesController(GamesRepo gamesRepo, IMapper mapper)
         {
-            this.game = game;
             this.mapper = mapper;
+            this.gamesRepo = gamesRepo;
         }
         [HttpPost]
         public IActionResult Moves(Guid gameId, [FromBody]UserInputDto userInput)
         {
+            var gameDto = gamesRepo.Games[gameId];
+            var game = mapper.Map<GameDto, SmartGame>(gameDto);
             game.MakeMove(new Vector(userInput.ClickedPos.X, userInput.ClickedPos.Y));
-            var gameDto = mapper.Map<GameBase, GameDto>(game);
-            return Ok(gameDto);
+            var newGameDto = mapper.Map<SmartGame, GameDto>(game);
+            gamesRepo.Games[gameId] = newGameDto;
+            return Ok(newGameDto);
         }
     }
 }

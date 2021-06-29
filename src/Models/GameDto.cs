@@ -16,6 +16,11 @@ namespace thegame.Models
             Score = score;
         }
 
+        public GameDto()
+        {
+
+        }
+
         public CellDto[] Cells { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
