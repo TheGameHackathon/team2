@@ -10,5 +10,8 @@ namespace thegame.Services.FieldFactory
     public interface IFieldFactory
     {
         public GameDto GetGameDto(Complexity complexity);
+        public GameDto GetNextLevel(Complexity complexity);
     }
+
+    
 }

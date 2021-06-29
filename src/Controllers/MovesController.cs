@@ -6,6 +6,7 @@ using thegame.Domain;
 using thegame.Domain.Game;
 using thegame.Models;
 using thegame.Services;
+using thegame.Services.FieldFactory;
 
 namespace thegame.Controllers
 {
@@ -15,10 +16,12 @@ namespace thegame.Controllers
         private GameBase game;
         private IMapper mapper;
         private GamesRepo gamesRepo;
-        public MovesController(GamesRepo gamesRepo, IMapper mapper)
+        private IFieldFactory factory;
+        public MovesController(GamesRepo gamesRepo, IMapper mapper, IFieldFactory factory)
         {
             this.mapper = mapper;
             this.gamesRepo = gamesRepo;
+            this.factory = factory;
         }
         [HttpPost]
         public IActionResult Moves(Guid gameId, [FromBody]UserInputDto userInput)
@@ -29,8 +32,17 @@ namespace thegame.Controllers
             gamesRepo.Games[gameId].Cells = game.gameField.Cells.SelectMany(x => x.Select(y=>new 
                 CellDto($"h{y.Coordinates.Y}w{y.Coordinates.X}", new VectorDto(y.Coordinates.X, y.Coordinates.Y),
                     TypeColorToColor(y.Color),"", 0))).ToArray();
-            //var newGameDto = mapper.Map<SmartGame, GameDto>(game);
-            // gamesRepo.Games[gameId] = newGameDto;
+            gameDto.Score++;
+            if (game.IsFinished)
+            {
+                //return Ok(factory.GetNextLevel(gameDto.Complexity));
+                //var newGame = factory.GetNextLevel(gameDto.Complexity);
+                //gameDto.Cells = newGame.Cells;
+                //gameDto.Width = newGame.Width;
+                //gameDto.Height = newGame.Height;
+                //gameDto.
+            }
+
             return Ok(gameDto);
         }
         private string TypeColorToColor(Color color)

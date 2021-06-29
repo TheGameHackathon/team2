@@ -10,6 +10,14 @@ namespace thegame.Domain.Game
     public class SmartGame : GameBase
     {
         private Cell leftUpCell;
+        private int Score { get; set; }
+
+        public bool IsFinished
+        {
+            get => isFinished();
+        }
+        private bool isFinished()=>
+            gameField.Cells.All(x => x.All(y => y.Color == leftUpCell.Color));
 
         public SmartGame()
         {
@@ -32,6 +40,7 @@ namespace thegame.Domain.Game
 
         private void BFS(Color startColor, Color chosenColor)
         {
+            int doneCells=0;
             var queue = new Queue<Cell>();
             var visited = new HashSet<Cell>();
             queue.Enqueue(leftUpCell);
