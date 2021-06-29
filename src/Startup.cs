@@ -38,7 +38,7 @@ namespace thegame
                     .ForMember(dest => dest.Cells, opt => opt.MapFrom(
                         x => x.gameField.Cells.SelectMany(a => a).Select(a =>
                             new CellDto($"h{a.Coordinates.Y}w{a.Coordinates.X}",
-                                new VectorDto(a.Coordinates.X, a.Coordinates.Y), TypeColorToColor(a.Color), "", 0))))
+                                new VectorDto(a.Coordinates.X, a.Coordinates.Y), a.Color.TypeColorToColor(), "", 0))))
                     .ForMember(dest => dest.Height, opt => opt.MapFrom(x => x.gameField.Height))
                     .ForMember(dest => dest.Width, opt => opt.MapFrom(x => x.gameField.Width));
             });
@@ -51,36 +51,9 @@ namespace thegame
             for (var i = 0; i < width; i++)
                 newCells[i] = new Cell[width];
             foreach (var cell in cells)
-                newCells[cell.Pos.Y][cell.Pos.X] = new Cell(new Vector(cell.Pos.X, cell.Pos.Y), TypeColorToColor(cell.Type));
+                newCells[cell.Pos.Y][cell.Pos.X] = new Cell(new Vector(cell.Pos.X, cell.Pos.Y), cell.Type.TypeColorToColor());
             return newCells;
         }
-
-        private string TypeColorToColor(Color color)
-        {
-            if (color == Color.Blue)
-                return "color1";
-            if (color == Color.Red)
-                return "color2";
-            if (color == Color.Green)
-                return "color3";
-            if (color == Color.Cyan)
-                return "color4";
-            return "color5";
-        }
-
-        private Color TypeColorToColor(string type)
-        {
-            if (type == "color1")
-                return Color.Blue;
-            if (type == "color2")
-                return Color.Red;
-            if (type == "color3")
-                return Color.Green;
-            if (type == "color4")
-                return Color.Cyan;
-            return Color.Magenta;
-        }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app)
         {
@@ -101,4 +74,34 @@ namespace thegame
             app.UseStaticFiles();
         }
     }
+
+    public static class StartupExtensions
+    {
+        public static string TypeColorToColor(this Color color)
+        {
+            if (color == Color.Blue)
+                return "color1";
+            if (color == Color.Red)
+                return "color2";
+            if (color == Color.Green)
+                return "color3";
+            if (color == Color.Cyan)
+                return "color4";
+            return "color5";
+        }
+
+        public static Color TypeColorToColor(this string type)
+        {
+            if (type == "color1")
+                return Color.Blue;
+            if (type == "color2")
+                return Color.Red;
+            if (type == "color3")
+                return Color.Green;
+            if (type == "color4")
+                return Color.Cyan;
+            return Color.Magenta;
+        }
+    }
+    
 }
