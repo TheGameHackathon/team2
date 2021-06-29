@@ -30,6 +30,10 @@ namespace thegame
                 cfg.CreateMap<GameDto, GameBase>()
                     .ForMember(dest => dest.gameField,
                         opt => opt.MapFrom(x => OneDimensionCellsToTwoDimenstion(x.Cells, x.Width, x.Height)));
+                cfg.CreateMap<GameBase, GameDto>()
+                    .ForMember(dest => dest.Cells, opt => opt.MapFrom(x => x.gameField.Cells.SelectMany(a => a)))
+                    .ForMember(dest => dest.Height, opt => opt.MapFrom(x => x.gameField.Height))
+                    .ForMember(dest => dest.Width, opt => opt.MapFrom(x => x.gameField.Width));
             });
         }
         private Cell[][] OneDimensionCellsToTwoDimenstion(CellDto[] cells, int width, int height)

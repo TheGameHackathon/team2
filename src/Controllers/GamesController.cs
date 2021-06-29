@@ -10,15 +10,18 @@ namespace thegame.Controllers
     public class GamesController : Controller
     {
         private IFieldFactory fieldFactory;
+        private GamesRepo gamesRepo;
 
-        public GamesController(IFieldFactory fieldFactory)
+        public GamesController(IFieldFactory fieldFactory, GamesRepo gamesRepo)
         {
             this.fieldFactory = fieldFactory;
+            this.gamesRepo = gamesRepo;
         }
         [HttpPost]
         public IActionResult Index()
         {
-            var newGame = fieldFactory.GetGameDto(Complexity.Level2);
+            var newGame = fieldFactory.GetGameDto(Complexity.Level1);
+            gamesRepo.Games[newGame.Id] = newGame;
             return Ok(newGame);
         }
     }
