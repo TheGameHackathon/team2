@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using thegame.Domain.Game;
 using thegame.Models;
 using thegame.Services;
 using thegame.Services.FieldFactory;
@@ -12,7 +13,7 @@ namespace thegame.Controllers
 
         public GamesController(IFieldFactory fieldFactory)
         {
-
+            this.fieldFactory = fieldFactory;
         }
         [HttpPost]
         public IActionResult Index()

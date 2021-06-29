@@ -5,7 +5,7 @@ namespace thegame.Domain.Game
 {
     public class StupidGame : GameBase
     {
-        public StupidGame(Guid id, GameField gameField) : base(id, gameField)
+        public StupidGame(Guid id, GameField gameField, Complexity complexity) : base(id, gameField, complexity)
         {
         }
 
