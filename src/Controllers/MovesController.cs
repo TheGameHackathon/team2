@@ -43,7 +43,7 @@ public class MovesController : Controller
     public IActionResult MovesOneStepByAI(Guid gameId)
     {
         var huj = Game.MakeStepByBot(gameId);
-        var game = Game.GetMap(gameId, 0);
+        var game = Game.GetMapOrDefault(gameId);
         return Ok(game);
     }
 }

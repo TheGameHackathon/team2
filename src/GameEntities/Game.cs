@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks.Dataflow;
 using thegame.Models;
 using thegame.Services;
 
@@ -42,14 +43,14 @@ public class Game
 
     public static GameDto GetMap(Guid userId, int difficulty = 1)
     {
-        if (Users.TryGetValue(userId, out var user)) return user;
-
+        if (Users.TryGetValue(userId, out var game)) return game;
+        
         var guid = userId;
         var password = userId;
         var gameDto = new GameDto(
             GenerateMap(difficulty), true, true,
             CalculateSize(difficulty), CalculateSize(difficulty), guid,
-            false, (int) Math.Pow(CalculateSize(difficulty), 2), password);
+            GetGameState(userId), (int) Math.Pow(CalculateSize(difficulty), 2), password);
 
         Users.Add(guid, gameDto);
         return gameDto;
@@ -70,6 +71,8 @@ public class Game
             }
         }
         MapHandler.MakeMove(game.Cells, game.Height, game.Width, color);
+        game.Score -= 1;
+        game.IsFinished = CheckGame(userId, game.Cells, game.Height, game.Width);
         return true;
     }
 
@@ -77,67 +80,17 @@ public class Game
     {
         if (!Users.TryGetValue(userId, out var game)) return false;
         MapHandler.MakeMove(game.Cells, game.Height, game.Width, Bot.ChooseBestMove(game.Cells, game.Height, game.Width));
+        game.IsFinished = CheckGame(userId, game.Cells, game.Height, game.Width);
         return true;
     }
     
-    private static bool Paint(List<int> job, string oldColor, string newColor, string[,] grid, int width, int height)
+    private static bool CheckGame(Guid userId, CellDto[] grid, int height, int width)
     {
-        var newJob = new List<int>();
-
-        while (job.Count > 1)
-        {
-            var y = job.Last();
-            job.RemoveAt(job.Count - 1);
-            var x = job.Last();
-            job.RemoveAt(job.Count - 1);
-
-            if (oldColor != grid[x, y])
-                continue;
-
-            grid[x, y] = newColor;
-
-            if (x < width - 1 && grid[x + 1, y] == oldColor)
-            {
-                newJob.Add(x + 1);
-                newJob.Add(y);
-            }
-
-            if (y < height - 1 && grid[x, y + 1] == oldColor)
-            {
-                newJob.Add(x);
-                newJob.Add(y + 1);
-            }
-
-            if (x > 0 && grid[x - 1, y] == oldColor)
-            {
-                newJob.Add(x - 1);
-                newJob.Add(y);
-            }
-
-            if (y > 0 && grid[x, y - 1] == oldColor)
-            {
-                newJob.Add(x);
-                newJob.Add(y - 1);
-            }
-        }
-
-        if (newJob.Count > 0)
-            Paint(newJob, oldColor, newColor, grid, width, height);
-
-
-        var c = grid[0, 0];
-        var win = true;
-
-        for (var i = 0; i < height; i++)
-        {
-            for (var j = 0; j < width; j++)
-            {
-                if (grid[i, j] == c) continue;
-                win = false;
-                break;
-            }
-        }
-
+        var currentColor = grid[0].Type;
+        var win = grid.All(t => t.Type == currentColor);
         return win;
     }
+
+    public static bool GetGameState(Guid userId) => 
+        Users.TryGetValue(userId, out var game) && game.IsFinished;
 }
