@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using thegame.Models;
 
@@ -7,6 +8,7 @@ namespace thegame.GameEntities;
 public class Game
 {
     public GameDto dto;
+    public static Dictionary<Guid, User> users;
 
     public Game()
     {
@@ -26,5 +28,13 @@ public class Game
                 random.Next(1, Enum.GetNames(typeof(Colors)).Length).ToString(),
                 "",
                 0);
+
+        return grid.ToArray();
     }
+}
+
+public class User
+{
+    public Guid token { get; set; }
+    public Guid password { get; set; }
 }
