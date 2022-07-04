@@ -26,7 +26,7 @@ async function startGame() {
 function makeMove(userInput) {
     if (!game || game.isFinished) return;
     console.log("send userInput: %o", userInput);
-    fetch(`/api/games/${game.id}/moves`,
+    fetch(`/api/games/${game.id}/moves/moves`,
             {
                 method: "POST",
                 headers: {
@@ -126,7 +126,7 @@ function addKeyboardListener() {
     window.addEventListener("keydown",
         e => {
             if (game && game.monitorKeyboard) {
-                makeMove({ keyPressed: e.keyCode });
+                makeMove({ keyPressed: e.key });
                 if (e.keyCode >= 37 && e.keyCode <= 40)
                     e.preventDefault();
             }
