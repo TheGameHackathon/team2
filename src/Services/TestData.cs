@@ -17,6 +17,6 @@ public class TestData
             new CellDto("4", new VectorDto {X = 1, Y = 0}, "#000fff", "", 20),
             new CellDto("5", movingObjectPosition, "#000fff", "☺", 10),
         };
-        return new GameDto(testCells, true, true, width, height, Guid.Empty, movingObjectPosition.X == 0, movingObjectPosition.Y);
+        return new GameDto(testCells, true, true, width, height, Guid.Empty, movingObjectPosition.X == 0, movingObjectPosition.Y, Guid.Empty);
     }
 }

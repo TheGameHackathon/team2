@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using thegame.GameEntities;
 using thegame.Models;
 using thegame.Services;
 
@@ -14,9 +15,7 @@ public class MovesController : Controller
     {
         if (userInput.KeyPressed == 'i')
             return MovesOneStepByAI(gameId);
-        var game = TestData.AGameDto(userInput.ClickedPos ?? new VectorDto {X = 1, Y = 0});
-        if (userInput.ClickedPos != null)
-            game.Cells.First(c => c.Type == "#ffffff").Pos = userInput.ClickedPos;
+        var game = Game.GetMap(gameId, 0);
         return Ok(game);
     }
     
