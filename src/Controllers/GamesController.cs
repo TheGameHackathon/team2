@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using thegame.GameEntities;
 using thegame.Models;
@@ -12,6 +14,16 @@ public class GamesController : Controller
     [HttpPost("{difficulty}")]
     public IActionResult Index([FromRoute] int difficulty)
     {
-        return Ok(Game.GetMap(Guid.NewGuid(), difficulty));
+        var guidKey = "UserGuid";
+        Guid userGuid;
+        if (HttpContext.Request.Cookies.TryGetValue(guidKey, out var cookieGuid))
+            userGuid = Guid.Parse(cookieGuid);
+        else
+        {
+            userGuid = Guid.NewGuid();
+            HttpContext.Response.Cookies.Append(guidKey, userGuid.ToString());
+        }
+        
+        return Ok(Game.GetMap(userGuid, difficulty));
     }
 }
