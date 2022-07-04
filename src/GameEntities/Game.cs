@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
 using thegame.Models;
+using thegame.Services;
 
 namespace thegame.GameEntities;
 
@@ -53,42 +55,16 @@ public class Game
     public static bool MakeStep(Guid userId, VectorDto vector)
     {
         if (!Users.TryGetValue(userId, out var game)) return false;
-
-        var cells = game.Cells;
-        var colors = new string[game.Width, game.Height];
-
-        for (var i = 0; i < game.Width; i++)
-        for (var j = 0; j < game.Height; j++)
+        var color = "";
+        foreach (var cell in game.Cells)
         {
-            colors[i, j] = cells[i * game.Width + j].Type;
+            if (cell.Pos.Equals(vector))
+            {
+                color = cell.Type;
+                break;
+            }
         }
-
-        // TODO проверка пароля - в куку
-        var result = Paint(
-            new List<int> {0, 0},
-            colors[0, 0],
-            colors[vector.X, vector.Y],
-            colors,
-            game.Width,
-            game.Height);
-
-        var newCells = new CellDto[game.Width * game.Height];
-        for (var i = 0; i < game.Width; i++)
-        for (var j = 0; j < game.Height; j++)
-        {
-            newCells[i * game.Width + j] = new CellDto(
-                (i * game.Width + j).ToString(),
-                new VectorDto {X = i, Y = j},
-                colors[i, j],
-                "",
-                0
-            );
-            colors[i, j] = cells[i * game.Width + j].Type;
-        }
-
-        game.Cells = newCells;
-        game.Score -= 1;
-        game.IsFinished = result;
+        MapHandler.MakeMove(game.Cells, game.Height, game.Width, color);
         return true;
     }
 
