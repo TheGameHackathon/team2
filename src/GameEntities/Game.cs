@@ -35,7 +35,12 @@ public class Game
         return grid.ToArray();
     }
 
-    public static GameDto GetMap(Guid userId, int difficulty)
+    public static GameDto GetMapOrDefault(Guid userId)
+    {
+        return Users.TryGetValue(userId, out var user) ? user : default;
+    }
+
+    public static GameDto GetMap(Guid userId, int difficulty = 1)
     {
         if (Users.TryGetValue(userId, out var user)) return user;
 

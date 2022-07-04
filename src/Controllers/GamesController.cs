@@ -26,4 +26,13 @@ public class GamesController : Controller
         
         return Ok(Game.GetMap(userGuid, difficulty));
     }
+
+    [HttpGet("~/{gameGuid}")]
+    public IActionResult Index([FromRoute] Guid gameGuid)
+    {
+        var gameMap = Game.GetMapOrDefault(gameGuid);
+        if (gameMap == null)
+            return NotFound();
+        return Ok(Game.GetMapOrDefault(gameGuid));
+    }
 }
