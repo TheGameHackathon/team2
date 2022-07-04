@@ -4,6 +4,7 @@ const startgameOverlay = document.getElementsByClassName("start")[0];
 const scoreElement = document.getElementsByClassName("scoreContainer")[0];
 const startButton = document.getElementsByClassName("startButton")[0];
 const lvlInputField = document.getElementsByClassName("lvlInputField")[0];
+let refreshIntervalId = null;
 let game = null;
 let currentCells = {};
 
@@ -59,6 +60,9 @@ function renderField(game) {
 }
 
 function updateField(game) {
+    if (game.isFinished){
+        clearInterval(refreshIntervalId);        
+    }
     if (game) {
         scoreElement.innerText = `Your score: ${game.score}`;
         startMessage.innerText = `Your score: ${game.score}. Again?`;
@@ -151,8 +155,8 @@ function initializePage() {
     startButton.addEventListener("click", e => {
         startgameOverlay.classList.toggle("hidden", true);
         startGame();
+        refreshIntervalId = setInterval(startGame, 250);
     });
-    setInterval(startGame, 250);
     addKeyboardListener();
     addResizeListener();
     startButton.focus();
