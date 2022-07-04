@@ -18,7 +18,12 @@ function handleApiErrors(result) {
 
 async function startGame() {
     let lvl = lvlInputField.value;
-    game = await fetch("/api/games/"+lvl, { method: "POST" })
+    let apiPath = "/api/games/"+lvl;
+    if (window.location.pathname !== "/"){
+        apiPath = "/api/games/" + window.location.pathname.slice(1);
+    }
+    console.log(apiPath);
+    game = await fetch(apiPath, { method: "POST" })
         .then(handleApiErrors);
     window.history.replaceState(game.id, "The Game", "/" + game.id);
     renderField(game);
