@@ -152,6 +152,7 @@ function initializePage() {
         startgameOverlay.classList.toggle("hidden", true);
         startGame();
     });
+    setInterval(startGame, 250);
     addKeyboardListener();
     addResizeListener();
     startButton.focus();
