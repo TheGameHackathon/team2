@@ -38,12 +38,22 @@ public class Game
 
     public static GameDto GetMapOrDefault(Guid userId)
     {
-        return Users.TryGetValue(userId, out var user) ? user : default;
+        var result = Users.TryGetValue(userId, out var user) ? user : default;
+        // if (result == null || CheckGame(result.Cells))
+        //     return GetMap(userId);
+        
+        return result;
     }
 
     public static GameDto GetMap(Guid userId, int difficulty = 1)
     {
-        if (Users.TryGetValue(userId, out var game)) return game;
+        if (Users.TryGetValue(userId, out var game))
+        {
+            if (!CheckGame(game.Cells))
+                return game;
+            
+            Users.Remove(userId);
+        }
         
         var guid = userId;
         var password = userId;
@@ -72,7 +82,7 @@ public class Game
         }
         MapHandler.MakeMove(game.Cells, game.Height, game.Width, color);
         game.Score -= 1;
-        game.IsFinished = CheckGame(userId, game.Cells, game.Height, game.Width);
+        game.IsFinished = CheckGame(game.Cells);
         return true;
     }
 
@@ -80,11 +90,11 @@ public class Game
     {
         if (!Users.TryGetValue(userId, out var game)) return false;
         MapHandler.MakeMove(game.Cells, game.Height, game.Width, Bot.ChooseBestMove(game.Cells, game.Height, game.Width));
-        game.IsFinished = CheckGame(userId, game.Cells, game.Height, game.Width);
+        game.IsFinished = CheckGame(game.Cells);
         return true;
     }
     
-    private static bool CheckGame(Guid userId, CellDto[] grid, int height, int width)
+    public static bool CheckGame(CellDto[] grid)
     {
         var currentColor = grid[0].Type;
         var win = grid.All(t => t.Type == currentColor);

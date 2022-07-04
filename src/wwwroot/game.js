@@ -66,11 +66,12 @@ function renderField(game) {
 
 function updateField(game) {
     if (game.isFinished){
-        clearInterval(refreshIntervalId);        
+        clearInterval(refreshIntervalId);
+        window.location = window.location.origin;
     }
     if (game) {
         scoreElement.innerText = `Your score: ${game.score}`;
-        startMessage.innerText = `Your score: ${game.score}. Again?`;
+        // startMessage.innerText = `Your score: ${game.score}. Again?`;
     }
     setTimeout(
         () => {
