@@ -80,7 +80,7 @@ function updateField(game) {
         }
         existedCells[newCell.id] = newCell;
     }
-    for (var currentCell of Object.values(currentCells)) {
+    for (let currentCell of Object.values(currentCells)) {
         if (!(currentCell.id in existedCells)) {
             deleteCell(currentCell);
         }
