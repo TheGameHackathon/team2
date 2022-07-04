@@ -10,6 +10,7 @@ let currentCells = {};
 
 function handleApiErrors(result) {
     if (!result.ok) {
+        clearInterval(refreshIntervalId);
         alert(`API returned ${result.status} ${result.statusText}. See details in Dev Tools Console`);
         throw result;
     }
