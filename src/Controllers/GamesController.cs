@@ -27,8 +27,8 @@ public class GamesController : Controller
         return Ok(Game.GetMap(userGuid, difficulty));
     }
 
-    [HttpGet("{gameGuid}")]
-    public IActionResult Index([FromRoute] Guid gameGuid)
+    [HttpPost("getfield/{gameGuid}")]
+    public IActionResult GetField([FromRoute] Guid gameGuid)
     {
         var gameMap = Game.GetMapOrDefault(gameGuid);
         if (gameMap == null)

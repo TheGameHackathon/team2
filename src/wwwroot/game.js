@@ -20,7 +20,7 @@ async function startGame() {
     let lvl = lvlInputField.value;
     let apiPath = "/api/games/"+lvl;
     if (window.location.pathname !== "/"){
-        apiPath = "/api/games/" + window.location.pathname.slice(1);
+        apiPath = "/api/games/getfield/" + window.location.pathname.slice(1);
     }
     console.log(apiPath);
     game = await fetch(apiPath, { method: "POST" })
@@ -168,3 +168,8 @@ function initializePage() {
 }
 
 initializePage();
+
+if (window.location.pathname !== "/") {
+    startGame();
+    refreshIntervalId = setInterval(startGame, 250);
+}
