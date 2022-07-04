@@ -1,5 +1,4 @@
 ﻿body {
-    background-color: black;
     color: green;
     font-family: "Clear Sans", "Helvetica Neue", Arial, sans-serif;
 }
@@ -24,6 +23,7 @@
     margin-top: 10px;
     border-collapse: collapse;
     width: 100%;
+    background-color: black;
 }
 
     .field td {
