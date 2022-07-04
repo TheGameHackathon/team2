@@ -13,6 +13,19 @@ public class MovesController : Controller
     [HttpPost]
     public IActionResult Moves(Guid gameId, [FromBody] UserInputDto userInput)
     {
+        var guidKey = "UserGuid";
+        Guid userGuid;
+        if (HttpContext.Request.Cookies.TryGetValue(guidKey, out var cookieGuid))
+            userGuid = Guid.Parse(cookieGuid);
+        else
+        {
+            userGuid = Guid.NewGuid();
+            HttpContext.Response.Cookies.Append(guidKey, userGuid.ToString());
+        }
+
+        if (userGuid != gameId)
+            return Forbid();
+        
         if (userInput != null)
         {
             if (userInput.KeyPressed == 'i')
