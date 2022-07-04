@@ -51,7 +51,7 @@ public static class bot
         var visitedCells = new HashSet<VectorDto>();
         var upperLeftCornerCells =
             GetComponentCells(twoDimensionCellsArray, visitedCells, new VectorDto() {X = 0, Y = 0}, height, width);
-        var huj = new Dictionary<string, int>();
+        var colorsCount = new Dictionary<string, int>();
         foreach (var cell in upperLeftCornerCells)
         {
             for (int i = 0; i < 4; i++)
@@ -59,9 +59,9 @@ public static class bot
                 var newCellPosition = new VectorDto() {X = cell.Pos.X + dx[i], Y = cell.Pos.Y + dy[i]};
                 if (IsCellInsideField(newCellPosition, height, width) && !visitedCells.Contains(newCellPosition))
                 {
-                    huj[twoDimensionCellsArray[newCellPosition.X, newCellPosition.Y].Type] =
-                        huj.ContainsKey(twoDimensionCellsArray[newCellPosition.X, newCellPosition.Y].Type)
-                            ? huj[twoDimensionCellsArray[newCellPosition.X, newCellPosition.Y].Type] + 1
+                    colorsCount[twoDimensionCellsArray[newCellPosition.X, newCellPosition.Y].Type] =
+                        colorsCount.ContainsKey(twoDimensionCellsArray[newCellPosition.X, newCellPosition.Y].Type)
+                            ? colorsCount[twoDimensionCellsArray[newCellPosition.X, newCellPosition.Y].Type] + 1
                             : 1;
                 }
             }
@@ -69,7 +69,7 @@ public static class bot
 
         var bestColor = "";
         var bestColorNumber = -1;
-        foreach (var color in huj)
+        foreach (var color in colorsCount)
         {
             if (color.Value > bestColorNumber)
             {
