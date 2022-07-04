@@ -7,8 +7,8 @@ namespace thegame.Controllers;
 [Route("api/games")]
 public class GamesController : Controller
 {
-    [HttpPost]
-    public IActionResult Index()
+    [HttpPost("{lvl}")]
+    public IActionResult Index(int lvl)
     {
         return Ok(TestData.AGameDto(new VectorDto {X = 1, Y = 1}));
     }
