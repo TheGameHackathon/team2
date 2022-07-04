@@ -1,4 +1,5 @@
 using System;
+using System.Xml.Schema;
 using thegame.Models;
 using thegame.Services;
 
@@ -12,8 +13,8 @@ public class Ii_Tests
     public void Ii_Works()
     {
         var rnd = new Random();
-        var height = 10;
-        var width = 12;
+        var height = 5;
+        var width = 5;
         var colorsNumber = 6;
         var cells = new CellDto[height * width];
         for (int i = 0; i < height; i++)
@@ -24,7 +25,22 @@ public class Ii_Tests
                     "", 0);
             }
         }
-        var color = bot.ChooseBestMove(cells, height, width, colorsNumber);
+
+        for (int i = 0; i < width * height; i++)
+        {
+            var huj = new string[height, width];
+            for (int j = 0; j < width * height; j++)
+            {
+                huj[cells[j].Pos.X, cells[j].Pos.Y] = cells[j].Type;
+            }
+            var color = Bot.ChooseBestMove(cells, height, width, colorsNumber);
+            MapHandler.MakeMove(cells, height, width, color);
+        }
+
+        for (int i = 0; i < height * width; i++)
+        {
+            Assert.AreEqual(cells[i].Type, cells[0].Type);
+        }
     }
     
 }
