@@ -37,7 +37,7 @@ public class Game
         if (Users.TryGetValue(userId, out var user)) return user;
 
         var guid = userId;
-        var password = Guid.NewGuid();
+        var password = userId;
         var gameDto = new GameDto(
             GenerateMap(difficulty), true, true,
             CalculateSize(difficulty), CalculateSize(difficulty), guid,
