@@ -33,7 +33,7 @@ public class Ii_Tests
             {
                 huj[cells[j].Pos.X, cells[j].Pos.Y] = cells[j].Type;
             }
-            var color = Bot.ChooseBestMove(cells, height, width, colorsNumber);
+            var color = Bot.ChooseBestMove(cells, height, width);
             MapHandler.MakeMove(cells, height, width, color);
         }
 

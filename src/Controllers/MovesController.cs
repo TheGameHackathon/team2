@@ -42,7 +42,8 @@ public class MovesController : Controller
     [HttpPost]
     public IActionResult MovesOneStepByAI(Guid gameId)
     {
-        throw new NotImplementedException();
-        // return Ok(game);
+        var huj = Game.MakeStepByBot(gameId);
+        var game = Game.GetMap(gameId, 0);
+        return Ok(game);
     }
 }

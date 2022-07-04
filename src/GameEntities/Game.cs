@@ -73,6 +73,13 @@ public class Game
         return true;
     }
 
+    public static bool MakeStepByBot(Guid userId)
+    {
+        if (!Users.TryGetValue(userId, out var game)) return false;
+        MapHandler.MakeMove(game.Cells, game.Height, game.Width, Bot.ChooseBestMove(game.Cells, game.Height, game.Width));
+        return true;
+    }
+    
     private static bool Paint(List<int> job, string oldColor, string newColor, string[,] grid, int width, int height)
     {
         var newJob = new List<int>();

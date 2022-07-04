@@ -6,7 +6,7 @@ namespace thegame.Services;
 
 public static class Bot
 {
-    public static string ChooseBestMove(CellDto[] cells, int height, int width, int colorsNumber)
+    public static string ChooseBestMove(CellDto[] cells, int height, int width)
     {
         var twoDimensionCellsArray = MapHandler.Get2DCellsArray(cells, height, width);
         var visitedCells = new HashSet<VectorDto>();
