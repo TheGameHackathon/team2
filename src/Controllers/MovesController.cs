@@ -11,14 +11,21 @@ namespace thegame.Controllers;
 public class MovesController : Controller
 {
     [HttpPost]
-    public IActionResult Moves(Guid gameId, [FromBody]UserInputDto userInput)
+    public IActionResult Moves(Guid gameId, [FromBody] UserInputDto userInput)
     {
-        if (userInput.KeyPressed == 'i')
-            return MovesOneStepByAI(gameId);
+        if (userInput != null)
+        {
+            if (userInput.KeyPressed == 'i')
+                return MovesOneStepByAI(gameId);
+        }
+
+        if (userInput != null)
+            Game.MakeStep(gameId, userInput.ClickedPos);
+        
         var game = Game.GetMap(gameId, 0);
         return Ok(game);
     }
-    
+
     [HttpPost]
     public IActionResult MovesOneStepByAI(Guid gameId)
     {
