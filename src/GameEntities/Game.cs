@@ -8,7 +8,7 @@ namespace thegame.GameEntities;
 
 public class Game
 {
-    private static readonly Dictionary<Guid, User> Users = new();
+    private static readonly Dictionary<Guid, GameDto> Users = new();
 
     public Game()
     {
@@ -21,8 +21,8 @@ public class Game
         var values = Enum.GetValues(typeof(Colors));
 
         var grid =
-            from x in Enumerable.Range(0, size - 1)
-            from y in Enumerable.Range(0, size - 1)
+            from x in Enumerable.Range(0, size)
+            from y in Enumerable.Range(0, size)
             select new CellDto((x * size + y).ToString(),
                 new VectorDto {X = x, Y = y},
                 ((Colors) values.GetValue(random.Next(values.Length))!).ToColor(),
@@ -34,7 +34,7 @@ public class Game
 
     public static GameDto GetMap(Guid userId, int difficulty)
     {
-        if (Users.TryGetValue(userId, out var user)) return user.Game;
+        if (Users.TryGetValue(userId, out var user)) return user;
 
         var guid = Guid.NewGuid();
         var password = Guid.NewGuid();
@@ -43,7 +43,7 @@ public class Game
             CalculateSize(difficulty), CalculateSize(difficulty), guid,
             false, difficulty * difficulty, password);
 
-        Users.Add(guid, new User(guid, gameDto));
+        Users.Add(guid, gameDto);
         return gameDto;
     }
 
